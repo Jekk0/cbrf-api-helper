@@ -1,11 +1,10 @@
 # In developing ...
-# php Api wrapper for Central Bank Of Russian Federation.
+# php wrapper for Central Bank Of Russian Federation Api.
 
 # Quick start.
 ```php
 <?php
 // Create instance
-
 require_once "vendor/autoload.php";
 
 $cbrf = new \Jekk0\Apicbrf\Apicbrf();
@@ -18,7 +17,7 @@ $cbrf->getAllCurrencies();
 
 // You can set specific date
 $cbrf->getAllCurrencies("05.12.2010");
-```
+
 // Result
 ```php
 array (size=34)
@@ -63,7 +62,7 @@ array (size=6)
   'Value' => string '58,5182' (length=7)
   'ID' => string 'R01235' (length=6)
 ```
-### Currency dynamics
+### Dynamics of currency quotes
 ```php
 $cbrf->getCurrencyDynamics('R01235', "01.12.2017", "04.12.2017")
 
@@ -84,7 +83,7 @@ array (size=2)
   ...
 ```
 
-### Metal dynamics
+### Dynamics of precious metal quotes
 ```php
 $cbrf->getMetalDynamics("25.11.2017", "04.12.2017")
 
