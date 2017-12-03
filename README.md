@@ -2,21 +2,28 @@
 # php Api wrapper for Central Bank Of Russian Federation.
 
 # Quick start.
+```php
+<?php
 
 // Create instance
 
 require_once "vendor/autoload.php";
 
 $cbrf = new \Jekk0\Apicbrf\Apicbrf();
+```
 
 ### Get all currencies
+
+```php
+<?php
 // For current date
 $cbrf->getAllCurrencies();
 
 // You can set specific date
 $cbrf->getAllCurrencies("05.12.2010");
-
+```
 // Result
+```php
 array (size=34)
   0 =>
     array (size=6)
@@ -27,9 +34,12 @@ array (size=34)
       'Value' => string '44,3861' (length=7)
       'ID' => string 'R01010' (length=6)
 ...
-
+```
 ### Get all currency ids:
+
+```php
 $cbrf->getCurrenciesIds();
+```
 //Result
 array (size=34)
   'AUD' => string 'R01010' (length=6)
