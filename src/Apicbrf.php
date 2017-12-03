@@ -12,11 +12,14 @@ class Apicbrf {
     }
 
     public function getAllCurrencies($date = NULL) {
-        $query = '';
-        if($date) {
-            $query = '?' . ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_DATE . "={$date}";
+        if (!$date) {
+            $date = date('d.m.Y');
         }
-        $data = $this->curl->get(ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_URL . $query);
+        $query = http_build_query(array(
+            ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_DATE => $date
+        ));
+        $data = $this->curl->get(ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_URL . '?' . $query);
+
         return $this->xmlToArray($data, 'Valute');
     }
 
@@ -34,6 +37,7 @@ class Apicbrf {
 
     protected function getCurrencyBy($key, $date) {
         $currencies = $this->getAllCurrencies($date);
+
         return $this->searchInArray($currencies, $key);
     }
 
@@ -47,23 +51,29 @@ class Apicbrf {
 
     public function getCurrenciesIds($date = NULL) {
         $currencies = $this->getAllCurrencies($date);
+
         return array_column($currencies, 'ID', 'CharCode');
     }
 
     public function getCurrencyDynamics($currencyId, $date1, $date2) {
-        $query = '?'
-            . ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_DATE1 . "={$date1}&"
-            . ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_DATE2 . "={$date2}&"
-            . ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_CURRENCY_ID ."={$currencyId}";
-        $data = $this->curl->get(ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_URL . $query);
+        $query = http_build_query(array(
+            ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_DATE1 => $date1,
+            ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_DATE2 => $date2,
+            ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_CURRENCY_ID => $currencyId
+        ));
+        $data = $this->curl->get(ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_URL . '?' . $query);
+
         return $this->xmlToArray($data, 'Record');
     }
 
     public function getMetalDynamics($date1, $date2) {
-        $query = '?'
-            . ApicbrfConstants::METAL_DYNAMICS_QUOTATIONS_DATE1 . "={$date1}&"
-            . ApicbrfConstants::METAL_DYNAMICS_QUOTATIONS_DATE2 . "={$date2}";
-        $data = $this->curl->get(ApicbrfConstants::DYNAMICS_QUOTATIONS_METAL_URL . $query);
+        $query = http_build_query(array(
+            ApicbrfConstants::METAL_DYNAMICS_QUOTATIONS_DATE1 => $date1,
+            ApicbrfConstants::METAL_DYNAMICS_QUOTATIONS_DATE2 => $date2
+        ));
+
+        $data = $this->curl->get(ApicbrfConstants::DYNAMICS_QUOTATIONS_METAL_URL . '?' . $query);
+
         return $this->xmlToArray($data, 'Record');
     }
 
@@ -76,6 +86,7 @@ class Apicbrf {
             $currency = $currency + $attributes;
             $currencies[] = $currency;
         }
+
         return $currencies;
     }
 }
