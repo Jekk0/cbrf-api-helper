@@ -4,7 +4,6 @@
 # Quick start.
 ```php
 <?php
-
 // Create instance
 
 require_once "vendor/autoload.php";
@@ -13,9 +12,7 @@ $cbrf = new \Jekk0\Apicbrf\Apicbrf();
 ```
 
 ### Get all currencies
-
 ```php
-<?php
 // For current date
 $cbrf->getAllCurrencies();
 
@@ -39,7 +36,7 @@ array (size=34)
 
 ```php
 $cbrf->getCurrenciesIds();
-```
+
 //Result
 array (size=34)
   'AUD' => string 'R01010' (length=6)
@@ -50,8 +47,9 @@ array (size=34)
   'BGN' => string 'R01100' (length=6)
   'BRL' => string 'R01115' (length=6)
   ...
-
+```
 ### Get currency by code, char code, id
+```php
 $cbrf->getCurrencyByCode(840)
 $cbrf->getCurrencyByCharCode('USD')
 $cbrf->getCurrencyById("R01235")
@@ -64,13 +62,60 @@ array (size=6)
   'Name' => string 'Доллар США' (length=19)
   'Value' => string '58,5182' (length=7)
   'ID' => string 'R01235' (length=6)
-
-
+```
 ### Currency dynamics
-$cbrf->getCurrencyDynamics('R01235', "25.11.2017", "04.12.2017")
+```php
+$cbrf->getCurrencyDynamics('R01235', "01.12.2017", "04.12.2017")
+
+//Result
+array (size=2)
+  0 =>
+    array (size=4)
+      'Nominal' => string '1' (length=1)
+      'Value' => string '58,5814' (length=7)
+      'Date' => string '01.12.2017' (length=10)
+      'Id' => string 'R01235' (length=6)
+  1 =>
+    array (size=4)
+      'Nominal' => string '1' (length=1)
+      'Value' => string '58,5182' (length=7)
+      'Date' => string '02.12.2017' (length=10)
+      'Id' => string 'R01235' (length=6)
+  ...
+```
 
 ### Metal dynamics
+```php
 $cbrf->getMetalDynamics("25.11.2017", "04.12.2017")
+
+//Result
+array (size=8)
+  0 =>
+    array (size=4)
+      'Buy' => string '2414,85' (length=7)
+      'Sell' => string '2414,85' (length=7)
+      'Date' => string '01.12.2017' (length=10)
+      'Code' => string '1' (length=1)
+  1 =>
+    array (size=4)
+      'Buy' => string '31,82' (length=5)
+      'Sell' => string '31,82' (length=5)
+      'Date' => string '01.12.2017' (length=10)
+      'Code' => string '2' (length=1)
+  2 =>
+    array (size=4)
+      'Buy' => string '1772,31' (length=7)
+      'Sell' => string '1772,31' (length=7)
+      'Date' => string '01.12.2017' (length=10)
+      'Code' => string '3' (length=1)
+  3 =>
+    array (size=4)
+      'Buy' => string '1917,34' (length=7)
+      'Sell' => string '1917,34' (length=7)
+      'Date' => string '01.12.2017' (length=10)
+      'Code' => string '4' (length=1)
+  ....
+```
 
 
 
