@@ -14,9 +14,6 @@
   "require": {
     "php": ">=5.3"
   },
-  "require-dev": {
-    "phpunit/phpunit": "6.*"
-  },
   "autoload": {
     "psr4": {
       "Jekk0\\Apicbrf\\": "src/"
