@@ -18,5 +18,11 @@
     "psr4": {
       "Jekk0\\Apicbrf\\": "src/"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Jekk0/cbrf-api-helper"
+    }
+  ]
 }
