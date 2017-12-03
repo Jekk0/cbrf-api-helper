@@ -7,9 +7,9 @@ class CurlInstance {
     protected $curl;
 
     protected $defaults = [
-
+        CURLOPT_RETURNTRANSFER => TRUE
     ];
-    
+
     public function __construct() {
         $this->curl = curl_init();
     }
@@ -25,8 +25,9 @@ class CurlInstance {
     public function request($method, $url, $options) {
         $options[CURLOPT_CUSTOMREQUEST] = $method;
         $options[CURLOPT_URL] = $url;
+        $options = $options + $this->defaults;
         $this->applyOptions($options);
-        
+
         return curl_exec($this->curl);
     }
 
