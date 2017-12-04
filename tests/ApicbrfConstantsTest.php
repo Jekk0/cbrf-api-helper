@@ -9,6 +9,8 @@
  */
 namespace Jekk0\Apicbrf;
 
+require_once dirname(__FILE__) . "/../src/ApicbrfConstants.php";
+
 /**
  * Class ApicbrfConstants
  * @package Jekk0\Apicbrf

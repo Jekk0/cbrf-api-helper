@@ -9,6 +9,8 @@
  */
 namespace Jekk0\Apicbrf;
 
+require_once dirname(__FILE__) . "/../src/Apicbrf.php";
+
 use Jekk0\Apicbrf\Exceptions\InvalidDateFormatException;
 use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
 

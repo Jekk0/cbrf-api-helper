@@ -9,10 +9,14 @@
  */
 namespace Jekk0\Apicbrf;
 
+require_once dirname(__FILE__) . "/../src/CurlInstance.php";
 /**
  * Class CurlInstance
  * @package Jekk0\Apicbrf
  */
 class CurlInstanceTest extends \PHPUnit\Framework\TestCase {
-
+    
+    public function testfirts() {
+        $this->assertTrue(TRUE);
+    }
 }
