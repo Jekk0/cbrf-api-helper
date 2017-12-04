@@ -14,7 +14,7 @@ use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
 
 class ApicbrfTest extends \PHPUnit\Framework\TestCase {
 
-    public function firstTest() {
+    public function testFirst() {
         $this->assertTrue(TRUE);
     }
 }
