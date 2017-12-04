@@ -23,30 +23,34 @@ class Apicbrf {
         return $this->xmlToArray($data, 'Valute');
     }
 
-    public function getCurrencyByCode($numCode, $date = array()) {
-        return $this->getCurrencyBy($numCode, $date);
+    public function getCurrencyByNumCode($numCode, $date = array()) {
+        return $this->getCurrencyBy($numCode, 'NumCode', $date);
     }
 
     public function getCurrencyByCharCode($charCode, $date = array()) {
-        return $this->getCurrencyBy($charCode, $date);
+        return $this->getCurrencyBy($charCode, 'CharCode', $date);
     }
 
     public function getCurrencyById($id, $date = array()) {
-        return $this->getCurrencyBy($id, $date);
+        return $this->getCurrencyBy($id, 'ID', $date);
     }
 
-    protected function getCurrencyBy($key, $date) {
+    protected function getCurrencyBy($key, $column, $date) {
         $currencies = $this->getAllCurrencies($date);
 
-        return $this->searchInArray($currencies, $key);
+        return $this->searchInArray($currencies, $key, $column);
     }
 
-    protected function searchInArray($array, $needle) {
-        $result = array_filter($array, function ($subArray) use ($needle) {
-            return array_search($needle, $subArray);
-        });
-
-        return array_shift($result);
+    protected function searchInArray($array, $needle, $column) {
+        $searchArray = array_column($array, $column);
+        foreach ($searchArray as $array) {
+            $index = array_search($needle, $array);
+            if (is_int($index)) {
+                return $array[$index];
+            }
+        }
+        
+        return array();
     }
 
     public function getCurrenciesIds($date = NULL) {

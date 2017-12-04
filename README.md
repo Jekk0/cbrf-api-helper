@@ -1,7 +1,8 @@
 # In developing ...
-# php wrapper for Central Bank Of Russian Federation Api.
 
-# Quick start.
+# PHP wrapper for Central Bank Of Russian Federation Api.
+
+### Quick start.
 ```php
 <?php
 // Create instance
@@ -19,7 +20,6 @@ $cbrf->getAllCurrencies();
 $cbrf->getAllCurrencies("05.12.2010");
 
 // Result
-```php
 array (size=34)
   0 =>
     array (size=6)
@@ -49,7 +49,7 @@ array (size=34)
 ```
 ### Get currency by code, char code, id
 ```php
-$cbrf->getCurrencyByCode(840)
+$cbrf->getCurrencyByNumCode(840)
 $cbrf->getCurrencyByCharCode('USD')
 $cbrf->getCurrencyById("R01235")
 
