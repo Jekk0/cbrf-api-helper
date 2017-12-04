@@ -9,6 +9,9 @@
  */
 namespace Jekk0\Apicbrf;
 
+use Jekk0\Apicbrf\Exceptions\InvalidDateFormatException;
+use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
+
 /**
  * Class Apicbrf
  * @package Jekk0\Apicbrf
