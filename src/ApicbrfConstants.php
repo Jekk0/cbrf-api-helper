@@ -14,6 +14,9 @@ namespace Jekk0\Apicbrf;
  * @package Jekk0\Apicbrf
  */
 class ApicbrfConstants {
+
+    const DATE_FORMAT = 'd.m.Y';
+
     const ALL_CURRENCIES_QUOTATIONS_URL = "http://www.cbr.ru/scripts/XML_daily.asp";
 
     const ALL_CURRENCIES_QUOTATIONS_DATE = "date_req";

@@ -23,13 +23,13 @@ class Apicbrf {
 
     public function getAllCurrencies($date = NULL) {
         if (!$date) {
-            $date = date('d.m.Y');
+            $date = date(ApicbrfConstants::DATE_FORMAT);
         }
+        $this->validateDate($date);
         $query = http_build_query(array(
             ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_DATE => $date
         ));
         $data = $this->curl->get(ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_URL . '?' . $query);
-
         return $this->xmlToArray($data, 'Valute');
     }
 
@@ -67,6 +67,9 @@ class Apicbrf {
     }
 
     public function getCurrencyDynamics($currencyId, $date1, $date2) {
+        $this->validateDate($date1);
+        $this->validateDate($date2);
+
         $query = http_build_query(array(
             ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_DATE1 => $date1,
             ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_DATE2 => $date2,
@@ -78,6 +81,9 @@ class Apicbrf {
     }
 
     public function getMetalDynamics($date1, $date2) {
+        $this->validateDate($date1);
+        $this->validateDate($date2);
+
         $query = http_build_query(array(
             ApicbrfConstants::METAL_DYNAMICS_QUOTATIONS_DATE1 => $date1,
             ApicbrfConstants::METAL_DYNAMICS_QUOTATIONS_DATE2 => $date2
@@ -103,7 +109,20 @@ class Apicbrf {
             $currency = $currency + $attributes;
             $currencies[] = $currency;
         }
-
+        if (empty($currencies)) {
+            $response = trim((string)$xml);
+            throw new InvalidRequestParamsException("Invalid argument parameters, response return: $response");
+        }
         return $currencies;
+    }
+
+    protected function validateDate($date) {
+        $dateTime = \DateTime::createFromFormat(ApicbrfConstants::DATE_FORMAT, $date);
+        if ($dateTime) {
+            return $dateTime->format(ApicbrfConstants::DATE_FORMAT);
+        }
+        throw new InvalidDateFormatException(
+            "Invalid date format '$date', supported only: " . ApicbrfConstants::DATE_FORMAT
+        );
     }
 }

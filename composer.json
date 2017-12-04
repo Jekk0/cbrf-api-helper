@@ -1,6 +1,6 @@
 {
   "name": "Jekk0/cbrf-api-helper",
-  "description": "The php wrapper component for Central Bank of Russian Federation API",
+  "description": "PHP wrapper component for Central Bank of Russian Federation API",
   "keywords": ["php", "currency", "cbrf", "bank", "api"],
   "homepage": "https://github.com/Jekk0/cbrf-api-helper",
   "license": "MIT",
@@ -18,11 +18,5 @@
     "psr4": {
       "Jekk0\\Apicbrf\\": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/Jekk0/cbrf-api-helper"
-    }
-  ]
+  }
 }
