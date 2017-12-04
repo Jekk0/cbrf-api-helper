@@ -1,8 +1,18 @@
 <?php
-
+/**
+ * PHP wrapper for Central Bank Of Russian Federation Api.
+ *
+ * @package    Jekk0/cbrf-api-helper
+ * @author     Jekko https://github.com/Jekk0
+ * @license    MIT
+ * @link       https://github.com/Jekk0/cbrf-api-helper
+ */
 namespace Jekk0\Apicbrf;
 
-
+/**
+ * Class Apicbrf
+ * @package Jekk0\Apicbrf
+ */
 class Apicbrf {
 
     protected $curl;
@@ -43,13 +53,10 @@ class Apicbrf {
 
     protected function searchInArray($array, $needle, $column) {
         $searchArray = array_column($array, $column);
-        foreach ($searchArray as $array) {
-            $index = array_search($needle, $array);
-            if (is_int($index)) {
-                return $array[$index];
-            }
+        $index = array_search($needle, $searchArray);
+        if (is_int($index)) {
+            return $array[$index];
         }
-        
         return array();
     }
 
@@ -80,9 +87,10 @@ class Apicbrf {
 
         return $this->xmlToArray($data, 'Record');
     }
-    
+
     public function getCurrencyIdByCharCode($charCode, $date = NULL) {
         $currencyIds = $this->getCurrenciesIds($date);
+
         return isset($currencyIds[$charCode]) ? $currencyIds[$charCode] : FALSE;
     }
 
