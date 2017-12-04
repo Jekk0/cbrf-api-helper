@@ -76,6 +76,11 @@ class Apicbrf {
 
         return $this->xmlToArray($data, 'Record');
     }
+    
+    public function getCurrencyIdByCharCode($charCode, $date = NULL) {
+        $currencyIds = $this->getCurrenciesIds($date);
+        return isset($currencyIds[$charCode]) ? $currencyIds[$charCode] : FALSE;
+    }
 
     protected function xmlToArray($data, $key) {
         $xml = simplexml_load_string($data);
