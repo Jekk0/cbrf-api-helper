@@ -112,8 +112,7 @@ class Apicbrf {
             $currency = $currency + $attributes;
             $currencies[] = $currency;
         }
-        if (empty($currencies)) {
-            $response = trim((string)$xml);
+        if (empty($currencies) && $response = trim((string)$xml)) {
             throw new InvalidRequestParamsException("Invalid argument parameters, response return: $response");
         }
         return $currencies;
