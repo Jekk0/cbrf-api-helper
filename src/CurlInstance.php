@@ -22,7 +22,7 @@ class CurlInstance {
     ];
 
     public function __construct() {
-        $this->curl = curl_init();
+        $this->curlInit();
     }
 
     public function get($url, $options = array()) {
@@ -39,13 +39,25 @@ class CurlInstance {
         $options = $options + $this->defaults;
         $this->applyOptions($options);
 
-        return curl_exec($this->curl);
+        return $this->curlExecute();
     }
 
     protected function applyOptions($options) {
         foreach ($options as $option => $value) {
-            curl_setopt($this->curl,$option, $value);
+            $this->curlSetOpt($option, $value);
         }
+    }
+    
+    protected function curlInit() {
+        $this->curl = curl_init();
+    }
+    
+    protected function curlSetOpt($option, $value) {
+        curl_setopt($this->curl, $option, $value);
+    }
+    
+    protected function curlExecute() {
+        return curl_exec($this->curl);
     }
 
 }

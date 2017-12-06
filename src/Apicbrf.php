@@ -11,6 +11,7 @@ namespace Jekk0\Apicbrf;
 
 use Jekk0\Apicbrf\Exceptions\InvalidDateFormatException;
 use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
+use Jekk0\Apicbrf\Exceptions\InvalidXmlFormatException;
 
 /**
  * Class Apicbrf
@@ -104,8 +105,14 @@ class Apicbrf {
     }
 
     protected function xmlToArray($data, $key) {
+        libxml_use_internal_errors(true);
         $xml = simplexml_load_string($data);
+        if (!$xml && $errors = $this->getXmlErrors()) {
+
+            throw new InvalidXmlFormatException("Error message(s): " . implode(', ', $errors));
+        }
         $currencies = array();
+        //check incorrect xml 
         foreach ($xml->$key as $currency) {
             $currency = (array)$currency;
             $attributes = array_shift($currency);
@@ -126,5 +133,26 @@ class Apicbrf {
         throw new InvalidDateFormatException(
             "Invalid date format '$date', supported only: " . ApicbrfConstants::DATE_FORMAT
         );
+    }
+
+    protected function getXmlErrors() {
+        $errors = libxml_get_errors();
+        $messages = array();
+        foreach ($errors as $error) {
+            $type = '';
+            switch ($error->level) {
+                case LIBXML_ERR_WARNING:
+                    $type = "Warning $error->code: ";
+                    break;
+                case LIBXML_ERR_ERROR:
+                    $type = "Error $error->code: ";
+                    break;
+                case LIBXML_ERR_FATAL:
+                    $type = "Fatal Error $error->code: ";
+                    break;
+            }
+            $messages[] = "$type: {$error->message}";
+        }
+        return $messages;
     }
 }
