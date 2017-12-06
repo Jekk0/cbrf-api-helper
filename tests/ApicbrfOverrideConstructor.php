@@ -14,24 +14,14 @@ require_once dirname(__FILE__) . "/../src/ApicbrfConstants.php";
 require_once dirname(__FILE__) . "/../src/Exceptions/InvalidXmlFormatException.php";
 require_once dirname(__FILE__) . "/../src/Exceptions/InvalidDateFormatException.php";
 require_once dirname(__FILE__) . "/../src/Exceptions/InvalidRequestParamsException.php";
+require_once dirname(__FILE__) . "/CurlEmulate.php";
 
 class ApicbrfOverrideConstructor extends Apicbrf {
     
     protected $curl;
     
     public function __construct() {
-        $this->curl = new class() {
-            
-            public $content = '';
-            
-            public function get() {
-                return $this->content;
-            }
-            
-            public function post() {
-                return $this->content;
-            }
-        };
+        $this->curl = new CurlEmulate();
     }
 
     public function setCurlContent($content) {
