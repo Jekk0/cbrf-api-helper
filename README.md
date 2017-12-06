@@ -2,6 +2,7 @@
 
 # PHP wrapper for Central Bank Of Russian Federation Api.
 [![Build Status](https://travis-ci.org/Jekk0/cbrf-api-helper.svg?branch=master)](https://travis-ci.org/Jekk0/cbrf-api-helper)
+[![Coverage Status](https://codecov.io/gh/Jekk0/cbrf-api-helper/branch/master/graphs/badge.svg)](https://codecov.io/gh/Jekk0/cbrf-api-helper)
 
 ### Quick start.
 ```php
