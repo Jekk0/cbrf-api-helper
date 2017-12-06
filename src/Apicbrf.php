@@ -34,6 +34,8 @@ class Apicbrf {
             ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_DATE => $date
         ));
         $data = $this->curl->get(ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_URL . '?' . $query);
+        $data = str_replace('"windows-1251"', '"utf-8"', $data);
+        $data = $this->w1251ToUtf8($data);
         return $this->xmlToArray($data, 'Valute');
     }
 
@@ -107,12 +109,11 @@ class Apicbrf {
     protected function xmlToArray($data, $key) {
         libxml_use_internal_errors(true);
         $xml = simplexml_load_string($data);
+        
         if (!$xml && $errors = $this->getXmlErrors()) {
-
             throw new InvalidXmlFormatException("Error message(s): " . implode(', ', $errors));
         }
         $currencies = array();
-        //check incorrect xml 
         foreach ($xml->$key as $currency) {
             $currency = (array)$currency;
             $attributes = array_shift($currency);
@@ -139,20 +140,12 @@ class Apicbrf {
         $errors = libxml_get_errors();
         $messages = array();
         foreach ($errors as $error) {
-            $type = '';
-            switch ($error->level) {
-                case LIBXML_ERR_WARNING:
-                    $type = "Warning $error->code: ";
-                    break;
-                case LIBXML_ERR_ERROR:
-                    $type = "Error $error->code: ";
-                    break;
-                case LIBXML_ERR_FATAL:
-                    $type = "Fatal Error $error->code: ";
-                    break;
-            }
-            $messages[] = "$type: {$error->message}";
+            $messages[] = "Error: {$error->message}";
         }
         return $messages;
+    }
+
+    protected function w1251ToUtf8($string) {
+        return mb_convert_encoding($string, 'utf-8', 'windows-1251');
     }
 }

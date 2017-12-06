@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<Metall FromDate="20171201" ToDate="20171201" name="Precious metals quotations">
+	<Record Date="01.12.2017" Code="1"><Buy>2414,85</Buy><Sell>2414,85</Sell></Record>
+	<Record Date="01.12.2017" Code="2"><Buy>31,82</Buy><Sell>31,82</Sell></Record>
+	<Record Date="01.12.2017" Code="3"><Buy>1772,31</Buy><Sell>1772,31</Sell></Record>
+	<Record Date="01.12.2017" Code="4"><Buy>1917,34</Buy><Sell>1917,34</Sell></Record>
+</Metall>

@@ -12,6 +12,8 @@ namespace Jekk0\Apicbrf;
 require_once dirname(__FILE__) . "/../src/Apicbrf.php";
 require_once dirname(__FILE__) . "/../src/ApicbrfConstants.php";
 require_once dirname(__FILE__) . "/../src/Exceptions/InvalidXmlFormatException.php";
+require_once dirname(__FILE__) . "/../src/Exceptions/InvalidDateFormatException.php";
+require_once dirname(__FILE__) . "/../src/Exceptions/InvalidRequestParamsException.php";
 
 class ApicbrfOverrideConstructor extends Apicbrf {
     

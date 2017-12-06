@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<ValCurs  ID="R01235" DateRange1="01.12.2017" DateRange2="04.12.2017"   name="Foreign Currency Market Dynamic">
+	<Record Date="01.12.2017" Id="R01235"><Nominal>1</Nominal><Value>58,5814</Value></Record>
+	<Record Date="02.12.2017" Id="R01235"><Nominal>1</Nominal><Value>58,5182</Value></Record>
+</ValCurs>
