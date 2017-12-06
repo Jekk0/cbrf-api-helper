@@ -11,6 +11,7 @@ namespace Jekk0\Apicbrf;
 
 use Jekk0\Apicbrf\Exceptions\InvalidDateFormatException;
 use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
+use Jekk0\Apicbrf\Exceptions\InvalidXmlFormatException;
 
 /**
  * Class Apicbrf
@@ -33,6 +34,8 @@ class Apicbrf {
             ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_DATE => $date
         ));
         $data = $this->curl->get(ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_URL . '?' . $query);
+        $data = str_replace('"windows-1251"', '"utf-8"', $data);
+        $data = $this->w1251ToUtf8($data);
         return $this->xmlToArray($data, 'Valute');
     }
 
@@ -104,7 +107,12 @@ class Apicbrf {
     }
 
     protected function xmlToArray($data, $key) {
+        libxml_use_internal_errors(true);
         $xml = simplexml_load_string($data);
+        
+        if (!$xml && $errors = $this->getXmlErrors()) {
+            throw new InvalidXmlFormatException("Error message(s): " . implode(', ', $errors));
+        }
         $currencies = array();
         foreach ($xml->$key as $currency) {
             $currency = (array)$currency;
@@ -126,5 +134,18 @@ class Apicbrf {
         throw new InvalidDateFormatException(
             "Invalid date format '$date', supported only: " . ApicbrfConstants::DATE_FORMAT
         );
+    }
+
+    protected function getXmlErrors() {
+        $errors = libxml_get_errors();
+        $messages = array();
+        foreach ($errors as $error) {
+            $messages[] = "Error: {$error->message}";
+        }
+        return $messages;
+    }
+
+    protected function w1251ToUtf8($string) {
+        return mb_convert_encoding($string, 'utf-8', 'windows-1251');
     }
 }
