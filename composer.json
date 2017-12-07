@@ -1,5 +1,5 @@
 {
-  "name": "Jekk0/cbrf-api-helper",
+  "name": "jekk0/cbrf-api-helper",
   "description": "PHP wrapper component for Central Bank of Russian Federation API",
   "keywords": ["php", "currency", "cbrf", "bank", "api"],
   "homepage": "https://github.com/Jekk0/cbrf-api-helper",
