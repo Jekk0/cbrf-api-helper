@@ -1,4 +1,4 @@
-# # PHP обертка над API Центрального банка Российской Федерации.
+# PHP обертка над API Центрального банка Российской Федерации.
 [![Build Status](https://travis-ci.org/Jekk0/cbrf-api-helper.svg?branch=master)](https://travis-ci.org/Jekk0/cbrf-api-helper)
 
 ### Установка
