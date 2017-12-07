@@ -1,7 +1,12 @@
-# In developing ...
-
-# PHP wrapper for Central Bank Of Russian Federation Api.
+# PHP wrapper for API of Central Bank Of Russian Federation.
+# PHP обертка над API Центрального банка Российской Федерации. [Документация на русском языке](./README_RU.md)
 [![Build Status](https://travis-ci.org/Jekk0/cbrf-api-helper.svg?branch=master)](https://travis-ci.org/Jekk0/cbrf-api-helper)
+
+### Installation
+
+ Install the latest version with
+
+ $ composer require Jekk0/cbrf-api-helper
 
 ### Quick start.
 ```php
