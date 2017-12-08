@@ -39,15 +39,15 @@ class Apicbrf {
         return $this->xmlToArray($data, 'Valute');
     }
 
-    public function getCurrencyByNumCode($numCode, $date = array()) {
+    public function getCurrencyByNumCode($numCode, $date = NULL) {
         return $this->getCurrencyBy($numCode, 'NumCode', $date);
     }
 
-    public function getCurrencyByCharCode($charCode, $date = array()) {
+    public function getCurrencyByCharCode($charCode, $date = NULL) {
         return $this->getCurrencyBy($charCode, 'CharCode', $date);
     }
 
-    public function getCurrencyById($id, $date = array()) {
+    public function getCurrencyById($id, $date = NULL) {
         return $this->getCurrencyBy($id, 'ID', $date);
     }
 
