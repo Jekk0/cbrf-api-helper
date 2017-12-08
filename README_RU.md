@@ -1,11 +1,20 @@
 # PHP обертка над API Центрального банка Российской Федерации.
 [![Build Status](https://travis-ci.org/Jekk0/cbrf-api-helper.svg?branch=master)](https://travis-ci.org/Jekk0/cbrf-api-helper)
+[![Coverage Status](https://codecov.io/gh/Jekk0/cbrf-api-helper/branch/master/graphs/badge.svg)](https://codecov.io/gh/Jekk0/cbrf-api-helper)
+[![Latest Stable Version](https://poser.pugx.org/jekk0/cbrf-api-helper/v/stable)](https://packagist.org/packages/jekk0/cbrf-api-helper)
+[![Total Downloads](https://poser.pugx.org/jekk0/cbrf-api-helper/downloads)](https://packagist.org/packages/jekk0/cbrf-api-helper)
+
+### Требования
+
+  * php >=5.5
+  * cURL
+  * SimpleXML
 
 ### Установка
 
  Установка последней версии используя composer
 
- $ composer require Jekk0/cbrf-api-helper
+ $ composer require jekk0/cbrf-api-helper
 
 ### Быстрый старт.
 Подключение пакета и создание обьекта для работы с API
