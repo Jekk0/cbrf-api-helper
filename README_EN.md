@@ -1,23 +1,22 @@
-# PHP обертка над API Центрального банка Российской Федерации.
+# PHP wrapper for API of Central Bank Of Russian Federation.
 [![Build Status](https://travis-ci.org/jekk0/cbrf-api-helper.svg?branch=master)](https://travis-ci.org/jekk0/cbrf-api-helper)
 [![Coverage Status](https://codecov.io/gh/jekk0/cbrf-api-helper/branch/master/graphs/badge.svg)](https://codecov.io/gh/jekk0/cbrf-api-helper)
 [![Latest Stable Version](https://poser.pugx.org/jekk0/cbrf-api-helper/v/stable)](https://packagist.org/packages/jekk0/cbrf-api-helper)
-[![Total Downloads](https://poser.pugx.org/jekk0/cbrf-api-helper/downloads)](https://packagist.org/packages/jekk0/cbrf-api-helper)
+[![Total Downloads](https://poser.pugx.org/jekk0/cbrf-api-helper/downloads)](https://packagist.org/packages/jekk0/cbrf-api-hecbrf-api-helper)
 
-### Требования
+### Requirements
 
   * php >=5.5
-  * cURL
-  * SimpleXML
+  * cURL extension
+  * SimpleXML extension
 
-### Установка
+### Installation
 
- Установка последней версии используя composer
-
+ Install the latest version with
+```
  $ composer require jekk0/cbrf-api-helper
-
-### Быстрый старт.
-Подключение пакета и создание обьекта для работы с API
+```
+### Quick start.
 ```php
 <?php
 // Create instance
@@ -26,15 +25,15 @@ require_once "vendor/autoload.php";
 $cbrf = new \Jekk0\Apicbrf\Apicbrf();
 ```
 
-### Получение котировок валют
+### Get all currencies
 ```php
-// На текущую дату
+// For current date
 $cbrf->getAllCurrencies();
 
-// Получение котировок на указанный день
+// You can set specific date
 $cbrf->getAllCurrencies("05.12.2010");
 
-// Результат запроса
+// Result
 array (size=34)
   0 =>
     array (size=6)
@@ -46,12 +45,12 @@ array (size=34)
       'ID' => string 'R01010' (length=6)
 ...
 ```
-### Получение идентификаторов для валют:
+### Get all currency ids:
 
 ```php
 $cbrf->getCurrenciesIds();
 
-// Результат запроса
+//Result
 array (size=34)
   'AUD' => string 'R01010' (length=6)
   'AZN' => string 'R01020A' (length=7)
@@ -62,13 +61,13 @@ array (size=34)
   'BRL' => string 'R01115' (length=6)
   ...
 ```
-### Получение данных по валюте по коду, текстовому коду и идентификатору
+### Get currency by code, char code, id
 ```php
 $cbrf->getCurrencyByNumCode(840)
 $cbrf->getCurrencyByCharCode('USD')
 $cbrf->getCurrencyById("R01235")
 
-// Результат запроса
+//Result
 array (size=6)
   'NumCode' => string '840' (length=3)
   'CharCode' => string 'USD' (length=3)
@@ -77,14 +76,11 @@ array (size=6)
   'Value' => string '58,5182' (length=7)
   'ID' => string 'R01235' (length=6)
 ```
-### Получения динамики котировок, в примере для USD
+### Dynamics of currency quotes
 ```php
-// R01235 - идентификатор валюты
-// 01.12.2017 - начальная дата
-// 04.12.2017 - конечная дата
 $cbrf->getCurrencyDynamics('R01235', "01.12.2017", "04.12.2017")
 
-// Результат запроса
+//Result
 array (size=2)
   0 =>
     array (size=4)
@@ -100,14 +96,30 @@ array (size=2)
       'Id' => string 'R01235' (length=6)
   ...
 ```
+### Obtaining a difference in the exchange rate
+##### If a weekend (Saturday or Sunday) has chosen, the exchange rate will be accepted and calculated for Friday, because on the weekend the rate does not change.  
+Пример:
+```
+//24.02.2018(Saturday)
+$cbrf->getCurrenciesDifference('24.02.2018')
 
-### Получения динамики котировок драгоценных металлов
+// Result(difference for Friday)
+array:34 [
+  "AUD" => "-0.1543"
+  "AZN" => "0.0629"
+  "GBP" => "-0.1684"
+  "AMD" => "0.0174"
+  "BYN" => "0.0104"
+  "BGN" => "-0.0425"
+  ...
+]
+
+```
+### Dynamics of precious metal quotes
 ```php
-// 25.11.2017 - начальная дата
-// 04.12.2017 - конечная дата
 $cbrf->getMetalDynamics("25.11.2017", "04.12.2017")
 
-// Результат запроса
+//Result
 array (size=8)
   0 =>
     array (size=4)
@@ -135,3 +147,8 @@ array (size=8)
       'Code' => string '4' (length=1)
   ....
 ```
+
+
+
+
+
