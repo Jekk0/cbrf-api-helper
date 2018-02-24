@@ -38,7 +38,8 @@ class Apicbrf
         $data = $this->curl->get(ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_URL . '?' . $query);
         $data = str_replace('"windows-1251"', '"utf-8"', $data);
         $data = $this->w1251ToUtf8($data);
-        return $this->xmlToArray($data, 'Valute');
+        $currencies = $this->xmlToArray($data, 'Valute');
+        return $this->stringValuesToFloat($currencies, array('Value'));
     }
 
     public function getCurrencyByNumCode($numCode, $date = null)
@@ -113,7 +114,8 @@ class Apicbrf
         ));
         $data = $this->curl->get(ApicbrfConstants::CURRENCY_DYNAMICS_QUOTATIONS_URL . '?' . $query);
 
-        return $this->xmlToArray($data, 'Record');
+        $currencyDynamics = $this->xmlToArray($data, 'Record');
+        return $this->stringValuesToFloat($currencyDynamics, array('Value'));
     }
 
     public function getMetalDynamics($date1, $date2)
@@ -127,8 +129,9 @@ class Apicbrf
         ));
 
         $data = $this->curl->get(ApicbrfConstants::DYNAMICS_QUOTATIONS_METAL_URL . '?' . $query);
+        $metalDynamics = $this->xmlToArray($data, 'Record');
 
-        return $this->xmlToArray($data, 'Record');
+        return $this->stringValuesToFloat($metalDynamics, array('Buy', 'Sell'));
     }
 
     public function getCurrencyIdByCharCode($charCode, $date = null)
@@ -181,12 +184,6 @@ class Apicbrf
         if (empty($currencies) && $response = trim((string)$xml)) {
             throw new InvalidRequestParamsException("Invalid argument parameters, response return: $response");
         }
-        $currencies = array_map(function ($currency) {
-            $value = str_replace(',', '.', $currency['Value']);
-            $currency['Value'] = (double)$value;
-            return $currency;
-        }, $currencies);
-
         return $currencies;
     }
 
@@ -213,5 +210,16 @@ class Apicbrf
     protected function w1251ToUtf8($string)
     {
         return mb_convert_encoding($string, 'utf-8', 'windows-1251');
+    }
+
+    protected function stringValuesToFloat($array, array $arrayKeys) {
+        $array = array_map(function ($currency) use ($arrayKeys) {
+            foreach ($arrayKeys as $arrayKey) {
+                $value = str_replace(',', '.', $currency[$arrayKey]);
+                $currency[$arrayKey] = (double)$value;
+            }
+            return $currency;
+        }, $array);
+        return $array;
     }
 }
