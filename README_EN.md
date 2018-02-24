@@ -98,7 +98,7 @@ array (size=2)
 ```
 ### Obtaining a difference in the exchange rate
 ##### If a weekend (Saturday or Sunday) has chosen, the exchange rate will be accepted and calculated for Friday, because on the weekend the rate does not change.  
-Пример:
+Example:
 ```php
 //24.02.2018(Saturday)
 $cbrf->getCurrenciesDifference('24.02.2018')
