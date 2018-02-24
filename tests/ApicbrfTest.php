@@ -12,6 +12,7 @@ namespace Jekk0\Apicbrf;
 
 require_once dirname(__FILE__) . "/ApicbrfOverrideConstructor.php";
 
+define('RESOURCE_FOLDER', dirname(__FILE__) . '/resources');
 
 use Jekk0\Apicbrf\Exceptions\InvalidDateFormatException;
 use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
@@ -24,7 +25,6 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        define('RESOURCE_FOLDER', dirname(__FILE__) . '/resources');
         $this->instance = new ApicbrfOverrideConstructor();
         $this->instance->setCurlContent(file_get_contents(RESOURCE_FOLDER . '/AllCurrencies.xml'));
     }
@@ -109,7 +109,7 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase
             'CharCode' => 'USD',
             'Nominal' => '1',
             'Name' => 'Доллар США',
-            'Value' => '58,6924',
+            'Value' => '58.6924',
             'ID' => 'R01235',
         );
         $this->assertEquals($array, $this->instance->getCurrencyByNumCode(840));
@@ -124,7 +124,7 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase
             'CharCode' => 'USD',
             'Nominal' => '1',
             'Name' => 'Доллар США',
-            'Value' => '58,6924',
+            'Value' => '58.6924',
             'ID' => 'R01235',
         );
         $this->assertEquals($array, $this->instance->getCurrencyByCharCode('USD'));
@@ -139,7 +139,7 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase
             'CharCode' => 'USD',
             'Nominal' => '1',
             'Name' => 'Доллар США',
-            'Value' => '58,6924',
+            'Value' => '58.6924',
             'ID' => 'R01235',
         );
         $this->assertEquals($array, $this->instance->getCurrencyById('R01235'));
@@ -193,13 +193,13 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase
         $array = array(
             array(
                 'Nominal' => '1',
-                'Value' => '58,5814',
+                'Value' => '58.5814',
                 'Date' => '01.12.2017',
                 'Id' => 'R01235'
             ),
             array(
                 'Nominal' => '1',
-                'Value' => '58,5182',
+                'Value' => '58.5182',
                 'Date' => '02.12.2017',
                 'Id' => 'R01235',
             )
@@ -213,27 +213,27 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase
         $array = array(
 
             array(
-                'Buy' => '2414,85',
-                'Sell' => '2414,85',
+                'Buy' => '2414.85',
+                'Sell' => '2414.85',
                 'Date' => '01.12.2017',
                 'Code' => '1'
             ),
             array(
-                'Buy' => '31,82',
-                'Sell' => '31,82',
+                'Buy' => '31.82',
+                'Sell' => '31.82',
                 'Date' => '01.12.2017',
                 'Code' => '2'
             ),
 
             array(
-                'Buy' => '1772,31',
-                'Sell' => '1772,31',
+                'Buy' => '1772.31',
+                'Sell' => '1772.31',
                 'Date' => '01.12.2017',
                 'Code' => '3'
             ),
             array(
-                'Buy' => '1917,34',
-                'Sell' => '1917,34',
+                'Buy' => '1917.34',
+                'Sell' => '1917.34',
                 'Date' => '01.12.2017',
                 'Code' => '4'
             )
