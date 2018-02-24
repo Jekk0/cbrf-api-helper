@@ -30,9 +30,7 @@ class Apicbrf
 
     public function getAllCurrencies($date = null)
     {
-        if (!$date) {
-            $date = date(ApicbrfConstants::DATE_FORMAT);
-        }
+        $date = $this->setDefaultDateIfNotSet($date);
         $this->validateDate($date);
         $query = http_build_query(array(
             ApicbrfConstants::ALL_CURRENCIES_QUOTATIONS_DATE => $date
@@ -60,14 +58,47 @@ class Apicbrf
 
     public function getCurrenciesIds($date = null)
     {
-        $currencies = $this->getAllCurrencies($date);
-
-        return array_column($currencies, 'ID', 'CharCode');
+        return $this->getCurrenciesColumn('ID', 'CharCode', $date);
     }
 
-    public function getCurrenciesDifference()
+    public function getCurrenciesColumn($column, $key, $date = null)
     {
+        $currencies = $this->getAllCurrencies($date);
+        return array_column($currencies, $column, $key);
+    }
 
+    public function getCurrenciesDifference($date = null)
+    {
+        $date = $this->setDefaultDateIfNotSet($date);
+
+        $dateTime = \DateTimeImmutable::createFromFormat(ApicbrfConstants::DATE_FORMAT, $date);
+        $dayOfWeek = (int)$dateTime->format('w');
+        switch ($dayOfWeek) {
+            case 0:
+                //Sunday
+                $subPeriod = 'P2D';
+                break;
+            case 6:
+                //Saturday
+                $subPeriod = 'P1D';
+                break;
+            default:
+                $subPeriod = 'P0D';
+                break;
+        }
+        $dateTime = $dateTime->sub(new \DateInterval($subPeriod));
+        $previous = $dateTime->sub(new \DateInterval('P1D'));
+
+        $currencies = $this->getCurrenciesColumn('Value', 'CharCode', $dateTime->format(ApicbrfConstants::DATE_FORMAT));
+        $currenciesPreviousDay = $this->getCurrenciesColumn(
+            'Value', 'CharCode', $previous->format(ApicbrfConstants::DATE_FORMAT)
+        );
+        $difference = array();
+        foreach ($currencies as $charCode => $currency) {
+            $difference[$charCode] = isset($currenciesPreviousDay[$charCode])
+                ? (double)($currency - $currenciesPreviousDay[$charCode]) : 0;
+        }
+        return $difference;
     }
 
     public function getCurrencyDynamics($currencyId, $date1, $date2)
@@ -105,6 +136,14 @@ class Apicbrf
         $currencyIds = $this->getCurrenciesIds($date);
 
         return isset($currencyIds[$charCode]) ? $currencyIds[$charCode] : false;
+    }
+
+    protected function setDefaultDateIfNotSet($date)
+    {
+        if (!$date) {
+            $date = date(ApicbrfConstants::DATE_FORMAT);
+        }
+        return $date;
     }
 
     protected function getCurrencyBy($key, $column, $date)
