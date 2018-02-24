@@ -88,15 +88,15 @@ class Apicbrf
         }
         $dateTime = $dateTime->sub(new \DateInterval($subPeriod));
         $previous = $dateTime->sub(new \DateInterval('P1D'));
-
         $currencies = $this->getCurrenciesColumn('Value', 'CharCode', $dateTime->format(ApicbrfConstants::DATE_FORMAT));
         $currenciesPreviousDay = $this->getCurrenciesColumn(
             'Value', 'CharCode', $previous->format(ApicbrfConstants::DATE_FORMAT)
         );
         $difference = array();
         foreach ($currencies as $charCode => $currency) {
-            $difference[$charCode] = isset($currenciesPreviousDay[$charCode])
-                ? (double)($currency - $currenciesPreviousDay[$charCode]) : 0;
+            $result = isset($currenciesPreviousDay[$charCode])
+                ? ((double)$currency - (double)$currenciesPreviousDay[$charCode]) : 0;
+            $difference[$charCode] = number_format($result, 4, '.', '');
         }
         return $difference;
     }
@@ -181,6 +181,12 @@ class Apicbrf
         if (empty($currencies) && $response = trim((string)$xml)) {
             throw new InvalidRequestParamsException("Invalid argument parameters, response return: $response");
         }
+        $currencies = array_map(function ($currency) {
+            $value = str_replace(',', '.', $currency['Value']);
+            $currency['Value'] = (double)$value;
+            return $currency;
+        }, $currencies);
+
         return $currencies;
     }
 
