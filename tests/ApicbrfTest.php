@@ -7,6 +7,7 @@
  * @license    MIT
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
+
 namespace Jekk0\Apicbrf;
 
 require_once dirname(__FILE__) . "/ApicbrfOverrideConstructor.php";
@@ -16,32 +17,39 @@ use Jekk0\Apicbrf\Exceptions\InvalidDateFormatException;
 use Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException;
 use Jekk0\Apicbrf\Exceptions\InvalidXmlFormatException;
 
-class ApicbrfTest extends \PHPUnit\Framework\TestCase {
+class ApicbrfTest extends \PHPUnit\Framework\TestCase
+{
 
     protected $instance;
 
-    public function setUp() {
+    public function setUp()
+    {
+        define('RESOURCE_FOLDER', dirname(__FILE__) . '/resources');
         $this->instance = new ApicbrfOverrideConstructor();
-        $this->instance->setCurlContent(file_get_contents(dirname(__FILE__) . '/AllCurrencies.xml'));
+        $this->instance->setCurlContent(file_get_contents(RESOURCE_FOLDER . '/AllCurrencies.xml'));
     }
 
-    public function tearDown() {
-        $this->instance = NULL;
+    public function tearDown()
+    {
+        $this->instance = null;
     }
 
-    public function testInstance() {
+    public function testInstance()
+    {
         $this->assertTrue($this->instance instanceof Apicbrf);
     }
 
     /**
      * @dataProvider testGetAllCurrenciesDataProvider
      */
-    public function testGetAllCurrencies($xml) {
+    public function testGetAllCurrencies($xml)
+    {
         $this->instance->setCurlContent($xml);
         $this->assertTrue(is_array($this->instance->getAllCurrencies()));
     }
 
-    public function testGetAllCurrenciesDataProvider() {
+    public function testGetAllCurrenciesDataProvider()
+    {
         return array(
             array("<?xml version='1.0' encoding='UTF-8'?><ROOT></ROOT>"),
             array(
@@ -70,7 +78,8 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
     /**
      * @expectedException Jekk0\Apicbrf\Exceptions\InvalidXmlFormatException
      */
-    public function testGetAllCurrenciesInvalidXmlException() {
+    public function testGetAllCurrenciesInvalidXmlException()
+    {
         $this->instance->setCurlContent('Wrong xml format');
         $this->instance->getAllCurrencies();
     }
@@ -78,7 +87,8 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
     /**
      * @expectedException Jekk0\Apicbrf\Exceptions\InvalidDateFormatException
      */
-    public function testGetAllCurrenciesInvalidDateFormatException() {
+    public function testGetAllCurrenciesInvalidDateFormatException()
+    {
         $this->instance->setCurlContent('<?xml version="1.0" encoding="UTF-8"?><Test></Test>');
         $this->instance->getAllCurrencies('20-12-2017');
     }
@@ -86,12 +96,14 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
     /**
      * @expectedException Jekk0\Apicbrf\Exceptions\InvalidRequestParamsException
      */
-    public function testGetAllCurrenciesInvalidRequestParamsException() {
+    public function testGetAllCurrenciesInvalidRequestParamsException()
+    {
         $this->instance->setCurlContent('<?xml version="1.0" encoding="utf-8" ?><ValCurs>Error in parameters</ValCurs>');
         $this->instance->getAllCurrencies();
     }
 
-    public function testGetCurrencyByNumCode() {
+    public function testGetCurrencyByNumCode()
+    {
         $array = array(
             'NumCode' => '840',
             'CharCode' => 'USD',
@@ -105,7 +117,8 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
 
     }
 
-    public function testGetCurrencyByCharCode() {
+    public function testGetCurrencyByCharCode()
+    {
         $array = array(
             'NumCode' => '840',
             'CharCode' => 'USD',
@@ -119,7 +132,8 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals(array(), $this->instance->getCurrencyByCharCode('usd'));
     }
 
-    public function testGetCurrencyById() {
+    public function testGetCurrencyById()
+    {
         $array = array(
             'NumCode' => '840',
             'CharCode' => 'USD',
@@ -133,7 +147,8 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals(array(), $this->instance->getCurrencyById('r01235'));
     }
 
-    public function testGetCurrenciesIds() {
+    public function testGetCurrenciesIds()
+    {
         $array = array(
             'AUD' => 'R01010',
             'AZN' => 'R01020A',
@@ -173,7 +188,8 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals($array, $this->instance->getCurrenciesIds());
     }
 
-    public function testGetCurrencyDynamics() {
+    public function testGetCurrencyDynamics()
+    {
         $array = array(
             array(
                 'Nominal' => '1',
@@ -188,11 +204,12 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
                 'Id' => 'R01235',
             )
         );
-        $this->instance->setCurlContent(file_get_contents(dirname(__FILE__) . '/CurrencyDynamicsQuotes.xml'));
+        $this->instance->setCurlContent(file_get_contents(RESOURCE_FOLDER . '/CurrencyDynamicsQuotes.xml'));
         $this->assertEquals($array, $this->instance->getCurrencyDynamics('R01235', "01.12.2017", "04.12.2017"));
     }
 
-    public function testGetMetalDynamics() {
+    public function testGetMetalDynamics()
+    {
         $array = array(
 
             array(
@@ -221,11 +238,12 @@ class ApicbrfTest extends \PHPUnit\Framework\TestCase {
                 'Code' => '4'
             )
         );
-        $this->instance->setCurlContent(file_get_contents(dirname(__FILE__) . '/MetalDynamicsQuotes.xml'));
+        $this->instance->setCurlContent(file_get_contents(RESOURCE_FOLDER . '/MetalDynamicsQuotes.xml'));
         $this->assertEquals($array, $this->instance->getMetalDynamics("01.12.2017", "01.12.2017"));
     }
 
-    public function testGetCurrencyIdByCharCode() {
+    public function testGetCurrencyIdByCharCode()
+    {
         $this->assertEquals('R01035', $this->instance->getCurrencyIdByCharCode('GBP'));
         $this->assertFalse($this->instance->getCurrencyIdByCharCode('WRONG'));
         $this->assertFalse($this->instance->getCurrencyIdByCharCode('R01035'));

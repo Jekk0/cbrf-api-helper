@@ -7,13 +7,16 @@
  * @license    MIT
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
+
 namespace Jekk0\Apicbrf;
 
-class CurlEmulate {
-    
+class CurlEmulate
+{
+
     public $content = '';
-    
-    public function get() {
+
+    public function get()
+    {
         return $this->content;
     }
 }
