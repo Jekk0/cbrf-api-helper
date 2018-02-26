@@ -79,6 +79,10 @@ class Apicbrf
                 //Sunday
                 $subPeriod = 'P2D';
                 break;
+            case 1:
+                //Monday
+                $subPeriod = 'P3D';
+                break;
             case 6:
                 //Saturday
                 $subPeriod = 'P1D';
