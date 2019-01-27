@@ -8,9 +8,14 @@
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
 
-namespace Jekk0\Cbrf\Client\Exceptions;
+namespace Jekk0\Cbrf\Client\Interfaces;
 
-class InvalidDateFormatException extends \Exception
+/**
+ * Interface CbrfConstants
+ * @package Jekk0\Cbrf\Client
+ */
+interface PreciousMetalApi
 {
+    public function getDynamics($date1, $date2);
 
 }

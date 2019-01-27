@@ -7,13 +7,15 @@
  * @license    MIT
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
-namespace Jekk0\Apicbrf;
+
+namespace Jekk0\Cbrf\Client\Interfaces;
 
 /**
- * Class ApicbrfConstants
- * @package Jekk0\Apicbrf
+ * Interface CbrfConstants
+ * @package Jekk0\Cbrf\Client
  */
-class ApicbrfConstants {
+interface CbrfConstants
+{
 
     const DATE_FORMAT = 'd.m.Y';
 

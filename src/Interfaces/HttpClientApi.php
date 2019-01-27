@@ -8,15 +8,13 @@
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
 
-namespace Jekk0\Apicbrf;
+namespace Jekk0\Cbrf\Client\Interfaces;
 
-class CurlEmulate
+/**
+ * Interface CbrfConstants
+ * @package Jekk0\Cbrf\Client
+ */
+interface HttpClientApi
 {
-
-    public $content = '';
-
-    public function get()
-    {
-        return $this->content;
-    }
+    public function get(string $uri, array $options = []);
 }

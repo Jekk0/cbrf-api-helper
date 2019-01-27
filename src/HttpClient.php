@@ -7,33 +7,34 @@
  * @license    MIT
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
-namespace Jekk0\Apicbrf;
+
+namespace Jekk0\Cbrf\Client;
+
+use Jekk0\Cbrf\Client\Interfaces\HttpClientApi;
 
 /**
- * Class CurlInstance
- * @package Jekk0\Apicbrf
+ * Class HttpClient
+ * @package Jekk0\Cbrf\Client
  */
-class CurlInstance {
+class HttpClient implements HttpClientApi
+{
 
     protected $curl;
 
-    protected $defaults = [
-        CURLOPT_RETURNTRANSFER => TRUE
-    ];
+    protected $defaults = [CURLOPT_RETURNTRANSFER => true];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->curlInit();
     }
 
-    public function get($url, $options = array()) {
-        return $this->request('GET', $url, $options);
+    public function get(string $uri, array $options = [])
+    {
+        return $this->request('GET', $uri, $options);
     }
 
-    public function post($url, $options = array()) {
-        return $this->request('POST', $url, $options);
-    }
-
-    public function request($method, $url, $options) {
+    protected function request($method, $url, $options)
+    {
         $options[CURLOPT_CUSTOMREQUEST] = $method;
         $options[CURLOPT_URL] = $url;
         $options = $options + $this->defaults;
@@ -42,21 +43,25 @@ class CurlInstance {
         return $this->curlExecute();
     }
 
-    protected function applyOptions($options) {
+    protected function applyOptions($options)
+    {
         foreach ($options as $option => $value) {
             $this->curlSetOpt($option, $value);
         }
     }
-    
-    protected function curlInit() {
+
+    protected function curlInit()
+    {
         $this->curl = curl_init();
     }
-    
-    protected function curlSetOpt($option, $value) {
+
+    protected function curlSetOpt($option, $value)
+    {
         curl_setopt($this->curl, $option, $value);
     }
-    
-    protected function curlExecute() {
+
+    protected function curlExecute()
+    {
         return curl_exec($this->curl);
     }
 

@@ -7,9 +7,10 @@
  * @license    MIT
  * @link       https://github.com/Jekk0/cbrf-api-helper
  */
-namespace Jekk0\Apicbrf\Exceptions;
 
+namespace Jekk0\Cbrf\Client\Exceptions;
 
-class InvalidXmlFormatException extends \Exception {
+class InvalidXmlFormatException extends \Exception
+{
 
 }
